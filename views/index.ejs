@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+
+</head>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-11" style="margin-bottom: 20px">
+            <H1>JS Issue Tracker</H1>
+            <form id="input-form" action="/" method="POST" >
+                <legend>Add a New Issue</legend>
+                <div class="form-group">
+                    <label for="description">Issue</label>
+                    <input type="text" name="description" class="form-control" id="description" required="true"  placeholder="Describe the issue...">
+                    <small class="form-text text-muted">Robots have feelings too, be nice! </small>
+                </div>
+                <div class="form-group">
+                    <label for="severity">Severity</label>
+                    <select class="form-control" name="severity" id="severity">
+                        <option>low</option>
+                        <option>medium</option>
+                        <option>high</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assign">Assign To</label>
+                    <input type="text" name="assign" class="form-control" id="assign" required="true"  placeholder="Assign to...">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!--check if there are any issues-->
+    <% if(issues){ %>
+    <div class="row justify-content-center" id="list">
+        <% issues.forEach(function(issue){ %>
+
+        <div class="col-10 issue open" style="border: solid 2px green; margin: 10px 0; padding-bottom: 10px; border-radius: 10px">
+            <p style="margin-bottom: 0px"> issue ID: <%= issue.id %></p>
+            <% if(issue.open){ %>
+            <span class="badge badge-pill badge-success">open</span>
+            <% } else { %>
+            <span class="badge badge-pill badge-warning">closed</span>
+            <% } %>
+            <h3><%= issue.description %></h3>
+            <p>Severity: <%= issue.severity %></p>
+            <p>Assign to: <%= issue.assign %></p>
+            <hr>
+            <form class="inline" action="/<%= issue.id %>?_method=PUT" method="POST">
+            <button type="submit" class="btn btn-sm btn-warning">close</button>
+            </form>
+            <form class="inline" action="/<%= issue.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+            </form>
+        </div>
+    <% }); %>
+    </div>
+</div>
+<% } %>
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.11/chance.min.js"></script>
+
+</body>
+</html>
